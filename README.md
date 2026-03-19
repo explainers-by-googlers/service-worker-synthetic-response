@@ -26,18 +26,11 @@ feedback on the proposed solution. It has not been approved to ship in Chrome.
 - [Non-goals](#non-goals)
 - [User research](#user-research)
 - [Use cases](#use-cases)
-  - [Use case 1](#use-case-1)
-  - [Use case 2](#use-case-2)
-- [[Potential Solution]](#potential-solution)
+- [Synthetic Response for navigations via the Static Routing API](#synthetic-response-for-navigations-via-the-static-routing-api)
   - [How this solution would solve the use cases](#how-this-solution-would-solve-the-use-cases)
-    - [Use case 1](#use-case-1-1)
-    - [Use case 2](#use-case-2-1)
+    - [Example: Cache for App Shell](#example-cache-for-app-shell)
+    - [Example: Cache for HTTP Headers only](#example-cache-for-http-headers-only)
 - [Detailed design discussion](#detailed-design-discussion)
-  - [[Tricky design choice #1]](#tricky-design-choice-1)
-  - [[Tricky design choice 2]](#tricky-design-choice-2)
-- [Considered alternatives](#considered-alternatives)
-  - [[Alternative 1]](#alternative-1)
-  - [[Alternative 2]](#alternative-2)
 - [Security and Privacy Considerations](#security-and-privacy-considerations)
 - [Stakeholder Feedback / Opposition](#stakeholder-feedback--opposition)
 - [References & acknowledgements](#references--acknowledgements)
@@ -62,17 +55,13 @@ Service Worker Synthetic Response extends the Static Routing API to eliminate th
 
 ## Non-goals
 
-TBD
-
-<!--
-[If there are "adjacent" goals which may appear to be in scope but aren't,
-enumerate them here. This section may be fleshed out as your design progresses and you encounter necessary technical and other trade-offs.]
--->
+- Handling Non-GET Requests: The synthetic response mechanism is intended for navigation requests (requestMode: "navigate"), which are primarily GET requests. Handling POST or other non-idempotent methods is not a goal.
+- Full Body Merging Logic: The synthetic response proposes a solution to merge responses. But particularly how to merge two response bodies might be handled by other proposals e.g. [Declarative partial updates](https://github.com/WICG/declarative-partial-updates).
+- Offline Solution: While it utilizes the cache, it is primarily a performance optimization for connected navigations. It is not intended to replace full offline-first PWA architectures.
 
 ## User research
 
-[If any user research has been conducted to inform your design choices,
-discuss the process and findings. User research should be more common than it is.]
+There are many websites using Service Worker App Shell architecture. We can frame the synthetic response as a native support of App Shell.
 
 ## Use cases
 
@@ -191,7 +180,7 @@ and why you decided against it.]
 
 ## Security and Privacy Considerations
 
-TBD
+The synthetic response has the same level of capability that the current Service Worker and Service Worker Static Routing API can do. Please refer the Security and Privacy section of the [Service Worker Static Routing API proposal](https://github.com/WICG/service-worker-static-routing-api/blob/main/security-privacy-questionnaire.md).
 
 <!--
 [Describe any interesting answers you give to the [Security and Privacy Self-Review
@@ -202,6 +191,10 @@ Guidelines](https://chromium.googlesource.com/chromium/src/+/master/docs/securit
 -->
 
 ## Stakeholder Feedback / Opposition
+
+This proposal was presented at Web Applications WG TPAC 2025. There were no clear objections. More detailed design and proposal were requested to evaluate that this is really the case that existing Service Worker APIs can't achieve. 
+- [minutes](https://docs.google.com/document/d/1fOjXiGUFf_krkfYaWf5drbqzY7CTxn7EcDYr5ZWjzFg/edit?tab=t.0#heading=h.czu3oufq4anf).
+- [slides](https://docs.google.com/presentation/d/1J-XVrSxSRpAp3nANZq7KoSMYYM1ZQOTvLKuv51SNJ3Q/edit?slide=id.p#slide=id.p)
 
 <!--
 
@@ -217,6 +210,8 @@ Guidelines](https://chromium.googlesource.com/chromium/src/+/master/docs/securit
 
 ## References & acknowledgements
 
+<!--
 Many thanks for valuable feedback and advice from:
 
 - [Person 1]
+-->
